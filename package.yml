@@ -1,0 +1,28 @@
+name       : aglio
+version    : 2.3.0
+release    : 1
+source     :
+    - https://github.com/danielgtaylor/aglio/archive/v2.3.0.tar.gz : eaebc0ce3090a8d094c50c72d6f386615cc2ed0c626db2a018b4db7bc690f6e9
+license    : MIT
+component  : programming.tools
+networking : yes
+summary    : An API Blueprint renderer with theme support that outputs static HTML
+description: |
+    An API Blueprint renderer that supports multiple themes and outputs static HTML that can be served by any web host. 
+    API Blueprint is a Markdown-based document format that lets you write API descriptions and documentation in a simple 
+    and straightforward way. Currently supported is API Blueprint format 1A.
+builddeps  :
+    - nodejs
+rundeps    :
+    - nodejs
+setup      : |
+    npm install
+    npm install grunt-cli
+build      : |
+    export PATH=$PATH:$workdir/node_modules/grunt-cli/bin/
+    grunt
+install    : |
+    install -dm00755 $installdir/usr/bin/
+    install -dm00755 $installdir/usr/share/aglio
+    ln -s /usr/share/aglio/bin/aglio.js $installdir/usr/bin/aglio
+    cp -R {bin,example*,lib,node_modules} $installdir/usr/share/aglio/
